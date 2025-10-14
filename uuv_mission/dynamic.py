@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from .terrain import generate_reference_and_limits
 import pandas as pd  # The pandas library can be used to extract data from a CSV file.
 
+from .control import pd_controller as controller
+
 class Submarine:
     def __init__(self):
 
@@ -89,7 +91,7 @@ class ClosedLoop:
         self.plant = plant
         self.controller = controller
 
-    def simulate(self,  mission: Mission, disturbances: np.ndarray) -> Trajectory:
+    def simulate(self, mission: Mission, disturbances: np.ndarray) -> Trajectory:
 
         T = len(mission.reference)
         if len(disturbances) < T:
@@ -102,7 +104,8 @@ class ClosedLoop:
         for t in range(T):
             positions[t] = self.plant.get_position()
             observation_t = self.plant.get_depth()
-            # Call your controller here
+            #
+            actions[t] = controller(t, observation_t, mission.reference)
             self.plant.transition(actions[t], disturbances[t])
 
         return Trajectory(positions)
