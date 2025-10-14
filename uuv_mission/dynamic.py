@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import numpy as np
 import matplotlib.pyplot as plt
 from .terrain import generate_reference_and_limits
+import pandas as pd  # The pandas library can be used to extract data from a CSV file.
 
 class Submarine:
     def __init__(self):
@@ -74,9 +75,13 @@ class Mission:
         return cls(reference, cave_height, cave_depth)
 
     @classmethod
+    # Extracts the columns from the csv file. Made with help of CHAT.
     def from_csv(cls, file_name: str):
-        # You are required to implement this method
-        pass
+        df = pd.read_csv(file_name)
+        reference = df.iloc[:, 0].to_numpy()
+        cave_height = df.iloc[:, 1].to_numpy()
+        cave_depth = df.iloc[:, 2].to_numpy()
+        return cls(reference, cave_height, cave_depth)
 
 
 class ClosedLoop:
