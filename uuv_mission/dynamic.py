@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from .terrain import generate_reference_and_limits
 import pandas as pd  # The pandas library can be used to extract data from a CSV file.
 
+# Import the pd_controller function from the control module
 from .control import pd_controller as controller
 
 class Submarine:
@@ -104,7 +105,7 @@ class ClosedLoop:
         for t in range(T):
             positions[t] = self.plant.get_position()
             observation_t = self.plant.get_depth()
-            #
+            # Produces an action with controller
             actions[t] = controller(t, observation_t, mission.reference)
             self.plant.transition(actions[t], disturbances[t])
 
