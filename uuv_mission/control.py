@@ -1,4 +1,4 @@
-def pd_controller(time, observation, reference):
+def pid_controller(time, observation, reference):
     # Set controller parameters
     kp = 0.1  # Proportional gain
     kd = 0.7   # Derivative gain

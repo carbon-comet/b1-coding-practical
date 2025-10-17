@@ -6,7 +6,7 @@ from .terrain import generate_reference_and_limits
 import pandas as pd  # The pandas library can be used to extract data from a CSV file.
 
 # Import the pd_controller function from the control module
-from .control import pd_controller as controller
+from .control import pid_controller as controller
 
 class Submarine:
     def __init__(self):
